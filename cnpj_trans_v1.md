@@ -107,23 +107,20 @@ if __name__ == "__main__":
     main()
 ```
 
-### Explanation:
+### Explicações e Ajustes
 
-- **`transform_cnpj` function:**
-  - Converts the input CNPJ (whether string, numeric, or float) into a 14-character numeric string format.
-  - Validates its length.
-  - Converts the first 8 characters (root) and the next 4 characters (order) into alphanumeric characters using ASCII values.
-  - Concatenates the transformed parts with the check digits to form the final alphanumeric CNPJ.
+- **Função `transform_cnpj`**:
+  - Aceita CNPJ em múltiplos formatos (`'00.000.000/0000-00'`, `'00000000000000'` ou como um inteiro `00000000000000`).
+  - Converte cada parte (raiz e ordem) em caracteres alfanuméricos com base nos valores ASCII:
+    - Caracteres numéricos são convertidos usando seus valores ASCII correspondentes menos 48.
+    - Caracteres alfabéticos (maiúsculos e minúsculos) são convertidos usando seus valores ASCII menos 55.
+  - Adiciona os dígitos de verificação numéricos para formar o CNPJ transformado.
 
-- **`validate_transformed_cnpj` function:**
-  - Checks if the transformed CNPJ matches the expected alphanumeric format.
-  - Extracts the root, order, and check digits from the transformed CNPJ.
-  - Converts the alphanumeric root and order back into their numeric equivalents for check digit calculation.
-  - Calculates the check digits using the modified module 11 algorithm and compares them with the provided check digits.
+- **Função `validate_transformed_cnpj`**:
+  - Valida se o CNPJ transformado corresponde ao formato alfanumérico especificado usando a expressão regular `alphanumeric_cnpj_pattern`.
+  - Verifica se o comprimento do CNPJ transformado é exatamente 14 caracteres.
+  - Lança `ValueError` se alguma validação falhar.
 
-- **Check Digit Calculation (`calculate_check_digits` function):**
-  - Implements the module 11 algorithm to calculate the check digits, considering the new rules where alphanumeric characters are converted to numeric values using ASCII values.
-
-- **Main Function (`main`):**
-  - Tests the transformation and validation functions using a sample CNPJ (`'43.996.693/0001-27'`).
-  - Prints whether the transformed CNPJ is valid or invalid based on the validation function's result.
+- **Função Principal (`main`)**:
+  - Demonstra como usar `transform_cnpj` para transformar um CNPJ original e `validate_transformed_cnpj` para validar o formato do CNPJ transformado.
+  - Imprime o CNPJ transformado se bem-sucedido ou uma mensagem de erro se houver problema com a transformação ou validação.
