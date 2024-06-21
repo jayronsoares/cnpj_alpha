@@ -14,65 +14,82 @@ Aqui está o código em Python:
 ```python
 import re
 
-# Regex pattern to match CNPJ format before transformation
-cnpj_pattern = re.compile(r'^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$')
-
-# Function to transform CNPJ into the required alphanumeric format
-def transform_cnpj(cnpj):
-    # Convert CNPJ to a standard numeric string format
+# Função para transformar CNPJ no formato alfanumérico necessário
+def transformar_cnpj(cnpj):
+    # Converter CNPJ para um formato numérico padrão
     if isinstance(cnpj, int):
         cnpj = f'{cnpj:014d}'
     else:
         cnpj = re.sub(r'\D', '', cnpj)
     
-    # Validate the length and format of the CNPJ
+    # Validar o comprimento e formato do CNPJ
     if len(cnpj) != 14:
-        raise ValueError("Invalid CNPJ length")
+        raise ValueError("Comprimento do CNPJ inválido")
     
-    # Extract root, order, and check digits
-    root = cnpj[:8]
-    order = cnpj[8:12]
-    check_digits = cnpj[12:]
+    # Extrair raiz, ordem e dígitos verificadores
+    raiz = cnpj[:8]
+    ordem = cnpj[8:12]
+    digitos_verificadores = cnpj[12:]
     
-    # Convert root and order into alphanumeric format
-    transformed_root = ''.join([chr(int(char) + 65) for char in root])  # Using ASCII code + 65 for letters A-Z
-    transformed_order = ''.join([chr(int(char) + 65) for char in order])  # Using ASCII code + 65 for letters A-Z
+    # Converter raiz e ordem para formato alfanumérico usando códigos ASCII
+    raiz_transformada = ''.join([chr(int(char) + 48 + 17) if char.isdigit() else char for char in raiz])
+    ordem_transformada = ''.join([chr(int(char) + 48 + 17) if char.isdigit() else char for char in ordem])
     
-    # Combine transformed parts and add check digits
-    transformed_cnpj = transformed_root + transformed_order + check_digits
+    # Combinar partes transformadas e adicionar dígitos verificadores
+    cnpj_transformado = raiz_transformada + ordem_transformada + digitos_verificadores
     
-    return transformed_cnpj
+    return cnpj_transformado
 
-# Regex pattern to match alphanumeric CNPJ format after transformation
-alphanumeric_cnpj_pattern = re.compile(r'^[A-Z0-9]{8}[A-Z0-9]{4}\d{2}$')
+# Padrão regex para corresponder ao formato alfanumérico do CNPJ após transformação
+padrao_cnpj_alfanumerico = re.compile(r'^[A-Z0-9]{12}\d{2}$')
 
-# Function to validate the transformed alphanumeric CNPJ format
-def validate_transformed_cnpj(transformed_cnpj):
-    # Check if the transformed CNPJ matches the expected alphanumeric format
-    if not alphanumeric_cnpj_pattern.match(transformed_cnpj):
-        raise ValueError("Invalid transformed CNPJ format")
+# Função para validar o formato do CNPJ alfanumérico transformado
+def validar_cnpj_transformado(cnpj_transformado):
+    # Verificar se o CNPJ transformado corresponde ao formato alfanumérico esperado
+    if not padrao_cnpj_alfanumerico.match(cnpj_transformado):
+        raise ValueError("Formato do CNPJ transformado inválido")
+    
+    # Validar os dígitos verificadores usando módulo 11
+    cnpj_sem_digitos_verificadores = cnpj_transformado[:-2]
+    digitos_verificadores = cnpj_transformado[-2:]
+    
+    def calcular_digitos_verificadores(cnpj):
+        # Converter caracteres alfanuméricos para valores numéricos baseados no ASCII
+        valores_numericos = [ord(char) - 48 if char.isdigit() else ord(char) - 55 for char in cnpj]
+        # Calcular o primeiro dígito verificador
+        soma1 = sum(val * ((i % 8) + 2) for i, val in enumerate(valores_numericos))
+        digito_verificador1 = (soma1 * 10 % 11) % 10
+        # Calcular o segundo dígito verificador
+        valores_numericos.append(digito_verificador1)
+        soma2 = sum(val * ((i % 8) + 2) for i, val in enumerate(valores_numericos))
+        digito_verificador2 = (soma2 * 10 % 11) % 10
+        return f'{digito_verificador1}{digito_verificador2}'
+    
+    digitos_verificadores_esperados = calcular_digitos_verificadores(cnpj_sem_digitos_verificadores)
+    if digitos_verificadores != digitos_verificadores_esperados:
+        raise ValueError("Dígitos verificadores inválidos")
+    
+    return True
 
-# Main function to test transformation and validation
-def main():
-    #original_cnpj = '12.345.678/0001-90'
-    #original_cnpj = '12345678000190'
-    original_cnpj = 24211614000180
+# Função principal para testar a transformação e validação
+def principal():
+    cnpj_original = '24.211.614/0001-80'  # Você pode testar com '24211614000180' ou como um inteiro 24211614000180
     
     try:
-        # Transform CNPJ
-        transformed_cnpj = transform_cnpj(original_cnpj)
-        print(f"Transformed CNPJ: {transformed_cnpj}")
+        # Transformar CNPJ
+        cnpj_transformado = transformar_cnpj(cnpj_original)
+        print(f"CNPJ Transformado: {cnpj_transformado}")
         
-        # Validate transformed CNPJ
-        validate_transformed_cnpj(transformed_cnpj)
-        print("Valid transformed CNPJ")
+        # Validar CNPJ transformado
+        validar_cnpj_transformado(cnpj_transformado)
+        print("CNPJ transformado válido")
         
     except ValueError as e:
-        print(f"Error: {e}")
+        print(f"Erro: {e}")
 
-# Execute main function
+# Executar função principal
 if __name__ == "__main__":
-    main()
+    principal()
 ```
 
 ### Explicações e Ajustes
