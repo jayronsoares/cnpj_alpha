@@ -1,4 +1,13 @@
-Ensuring adherence to the requirements, the verified code that transforms CNPJ into the required alphanumeric format and validates it:
+1. **Função `transform_cnpj`**:
+   - Converte o CNPJ para um formato de string numérica padrão, removendo caracteres não numéricos.
+   - Valida o comprimento do CNPJ (deve ter 14 dígitos após a limpeza).
+   - Divide o CNPJ em raiz, ordem e dígitos de verificação.
+   - Converte a raiz e a ordem em caracteres alfanuméricos usando valores ASCII.
+   - Calcula e adiciona os dígitos de verificação numéricos para formar o CNPJ alfanumérico final.
+
+2. **Função `validate_transformed_cnpj`**:
+   - Valida se o CNPJ transformado corresponde ao formato alfanumérico esperado.
+   - Garante que o comprimento do CNPJ transformado seja exatamente 14 caracteres.
 
 ```python
 import re
