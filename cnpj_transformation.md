@@ -14,70 +14,65 @@ Aqui está o código em Python:
 ```python
 import re
 
-# Expressão regular para validar o formato CNPJ antes da transformação
+# Regex pattern to match CNPJ format before transformation
 cnpj_pattern = re.compile(r'^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$')
 
-# Função para transformar o CNPJ no formato alfanumérico necessário
+# Function to transform CNPJ into the required alphanumeric format
 def transform_cnpj(cnpj):
-    # Converte o CNPJ para um formato de string numérica padrão
+    # Convert CNPJ to a standard numeric string format
     if isinstance(cnpj, int):
         cnpj = f'{cnpj:014d}'
     else:
         cnpj = re.sub(r'\D', '', cnpj)
     
-    # Valida o comprimento do CNPJ
+    # Validate the length and format of the CNPJ
     if len(cnpj) != 14:
-        raise ValueError("Comprimento inválido do CNPJ")
+        raise ValueError("Invalid CNPJ length")
     
-    # Extrai raiz, ordem e dígitos de verificação
+    # Extract root, order, and check digits
     root = cnpj[:8]
     order = cnpj[8:12]
     check_digits = cnpj[12:]
     
-    # Converte raiz e ordem para o formato alfanumérico
-    transformed_root = ''.join([chr(int(char) + 17) if char.isdigit() else chr(ord(char.upper()) + 10) for char in root])
-    transformed_order = ''.join([chr(int(char) + 17) if char.isdigit() else chr(ord(char.upper()) + 10) for char in order])
+    # Convert root and order into alphanumeric format
+    transformed_root = ''.join([chr(int(char) + 65) for char in root])  # Using ASCII code + 65 for letters A-Z
+    transformed_order = ''.join([chr(int(char) + 65) for char in order])  # Using ASCII code + 65 for letters A-Z
     
-    # Combina as partes transformadas e adiciona os dígitos de verificação
+    # Combine transformed parts and add check digits
     transformed_cnpj = transformed_root + transformed_order + check_digits
     
     return transformed_cnpj
 
-# Expressão regular para validar o formato alfanumérico do CNPJ após a transformação
+# Regex pattern to match alphanumeric CNPJ format after transformation
 alphanumeric_cnpj_pattern = re.compile(r'^[A-Z0-9]{8}[A-Z0-9]{4}\d{2}$')
 
-# Função para validar o formato alfanumérico do CNPJ transformado
+# Function to validate the transformed alphanumeric CNPJ format
 def validate_transformed_cnpj(transformed_cnpj):
-    # Verifica se o CNPJ transformado corresponde ao formato alfanumérico esperado
+    # Check if the transformed CNPJ matches the expected alphanumeric format
     if not alphanumeric_cnpj_pattern.match(transformed_cnpj):
-        raise ValueError("Formato de CNPJ transformado inválido")
+        raise ValueError("Invalid transformed CNPJ format")
     
-    # Verifica se o comprimento do CNPJ transformado é exatamente 14 caracteres
-    if len(transformed_cnpj) != 14:
-        raise ValueError("Comprimento inválido para CNPJ transformado")
-    
-    # Todos os testes passaram
-    return True
+    # Further checks if needed based on specific rules
 
-# Função principal para testar a transformação e validação
+# Main function to test transformation and validation
 def main():
-    original_cnpj = '12.345.678/0001-90'
+    #original_cnpj = '12.345.678/0001-90'
     #original_cnpj = '12345678000190'
-    #original_cnpj = 12345678000190   
+    original_cnpj = 24211614000180
     
     try:
-        # Transforma o CNPJ
+        # Transform CNPJ
         transformed_cnpj = transform_cnpj(original_cnpj)
-        print(f"CNPJ transformado: {transformed_cnpj}")
+        print(f"Transformed CNPJ: {transformed_cnpj}")
         
-        # Valida o CNPJ transformado
+        # Validate transformed CNPJ
         validate_transformed_cnpj(transformed_cnpj)
-        print("CNPJ transformado válido")
+        print("Valid transformed CNPJ")
         
     except ValueError as e:
-        print(f"Erro: {e}")
+        print(f"Error: {e}")
 
-# Executa a função principal
+# Execute main function
 if __name__ == "__main__":
     main()
 ```
