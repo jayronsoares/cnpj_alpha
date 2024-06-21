@@ -1,4 +1,4 @@
-Based on the evaluation and ensuring adherence to the requirements, here is the verified code that transforms CNPJ into the required alphanumeric format and validates it:
+Ensuring adherence to the requirements, the verified code that transforms CNPJ into the required alphanumeric format and validates it:
 
 ```python
 import re
