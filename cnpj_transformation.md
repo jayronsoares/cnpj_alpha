@@ -62,6 +62,8 @@ def validate_transformed_cnpj(transformed_cnpj):
 # Função principal para testar a transformação e validação
 def main():
     original_cnpj = '12.345.678/0001-90'
+    #original_cnpj = '12345678000190'
+    #original_cnpj = 12345678000190   
     
     try:
         # Transforma o CNPJ
