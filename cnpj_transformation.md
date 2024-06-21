@@ -51,8 +51,6 @@ def validate_transformed_cnpj(transformed_cnpj):
     # Check if the transformed CNPJ matches the expected alphanumeric format
     if not alphanumeric_cnpj_pattern.match(transformed_cnpj):
         raise ValueError("Invalid transformed CNPJ format")
-    
-    # Further checks if needed based on specific rules
 
 # Main function to test transformation and validation
 def main():
