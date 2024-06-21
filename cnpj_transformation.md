@@ -104,4 +104,3 @@ if __name__ == "__main__":
 - Ajuste os inputs conforme necessário para cobrir vários formatos e casos especiais e garantir robustez no tratamento de transformações e validações de CNPJ.
 
 <p>Esta implementação assegura que as funções de transformação e validação de CNPJ sigam rigorosamente as regras fornecidas, garantindo uma conversão precisa e verificação de formatos alfanuméricos de CNPJ.</p>
-<p>Ajustes podem ser feitos com base em regras de negócio específicas ou requisitos adicionais conforme necessário.</p>
