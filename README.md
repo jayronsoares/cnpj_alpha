@@ -1,4 +1,4 @@
-#### Fonte Receita Federal - Reforma Tributária - Nota Técnica nº 49/2024, COCAD/SUARA/RFB - Novo formato de CNPJ em alfanumérico:
+#### Reforma Tributária - Nota Técnica nº 49/2024, COCAD/SUARA/RFB - Novo formato de CNPJ em alfanumérico:
 - [Nota Técnica](http://sadd.receita.fazenda.gov.br/sadd-internet/pages/validadocumento.xhtml)
 <p>O novo número de identificação – CNPJ alfanumérico – terá o mesmo tamanho que o número atual, com 14 posições. As oito primeiras posições terão caracteres alfanuméricos (letras e números) e identificarão a raiz do novo número. </p>
   <p></p>As quatro posições seguintes à raiz também terão caracteres alfanuméricos (letras e números) e identificarão a ordem do estabelecimento a ser inscrito.</p>
