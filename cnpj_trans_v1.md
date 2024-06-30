@@ -120,7 +120,3 @@ if __name__ == "__main__":
   - Valida se o CNPJ transformado corresponde ao formato alfanumérico especificado usando a expressão regular `alphanumeric_cnpj_pattern`.
   - Verifica se o comprimento do CNPJ transformado é exatamente 14 caracteres.
   - Lança `ValueError` se alguma validação falhar.
-
-- **Função Principal (`main`)**:
-  - Demonstra como usar `transform_cnpj` para transformar um CNPJ original e `validate_transformed_cnpj` para validar o formato do CNPJ transformado.
-  - Imprime o CNPJ transformado se bem-sucedido ou uma mensagem de erro se houver problema com a transformação ou validação.
