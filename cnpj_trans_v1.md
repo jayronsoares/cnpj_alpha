@@ -107,7 +107,7 @@ if __name__ == "__main__":
     main()
 ```
 
-### Explicações e Ajustes
+### Explicações
 
 - **Função `transform_cnpj`**:
   - Aceita CNPJ em múltiplos formatos (`'00.000.000/0000-00'`, `'00000000000000'` ou como um inteiro `00000000000000`).
